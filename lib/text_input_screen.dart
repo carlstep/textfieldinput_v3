@@ -12,23 +12,26 @@ class ConversionScreen extends StatefulWidget {
 
 class _ConversionScreenState extends State<ConversionScreen> {
   final myTextFieldController = TextEditingController();
-  final myTextFormFieldController = TextEditingController(text: '0');
+  final myTextFormFieldController = TextEditingController();
+  final myTextController = TextEditingController(text: '0.0');
 
-  double doubleVar = 0;
+  double userInput = 0.0;
+
+  double textFieldVar = 0;
   String? myInitialValue = '0';
-  double inputValue = 1.0;
+  double textFormFieldVar = 0.0;
 
   void _printOutputValueTextField(String value) {
     setState(() {
-      doubleVar = double.parse(value);
-      print('the doubleVar - $doubleVar');
+      textFieldVar = double.parse(value);
+      print('the textFieldVar - $textFieldVar');
     });
   }
 
   void _printOutputValueTextFormField(String value) {
     setState(() {
-      inputValue = double.parse(value);
-      print('the doubleVar - $inputValue');
+      textFormFieldVar = double.parse(value);
+      print('the textFormFieldVar - $textFormFieldVar');
     });
   }
 
@@ -41,9 +44,9 @@ class _ConversionScreenState extends State<ConversionScreen> {
 
   void clearText() {
     myTextFieldController.clear();
-    myTextFormFieldController.clear();
-    doubleVar = 0;
-    inputValue = 0.0;
+    // myTextFormFieldController.clear();
+    textFieldVar = 0;
+    textFormFieldVar = 0.0;
   }
 
   @override
@@ -71,7 +74,7 @@ class _ConversionScreenState extends State<ConversionScreen> {
               ),
             ),
             Text(
-              ('output text - $doubleVar'),
+              ('output textFieldVar - $textFieldVar'),
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(
@@ -84,13 +87,19 @@ class _ConversionScreenState extends State<ConversionScreen> {
                 controller: myTextFormFieldController,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Enter a value',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      myTextFormFieldController.clear();
+                    },
+                    icon: const Icon(Icons.clear),
+                  ),
                 ),
               ),
             ),
             Text(
-              ('TextFormField - $inputValue'),
+              ('output textFormField - $textFormFieldVar'),
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(
@@ -99,6 +108,16 @@ class _ConversionScreenState extends State<ConversionScreen> {
             OutlinedButton(
               onPressed: clearText,
               child: const Text('Reset to 0'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Text(
+                userInput.toString(),
+                style: const TextStyle(fontSize: 30),
+              ),
             ),
           ],
         ),
