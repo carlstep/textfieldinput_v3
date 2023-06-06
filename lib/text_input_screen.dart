@@ -20,6 +20,7 @@ class _ConversionScreenState extends State<ConversionScreen> {
   double textFieldVar = 0;
   String? myInitialValue = '0';
   double textFormFieldVar = 0.0;
+  double convertedValue = 0;
 
   void _printOutputValueTextField(String value) {
     setState(() {
@@ -28,9 +29,11 @@ class _ConversionScreenState extends State<ConversionScreen> {
     });
   }
 
+// function is called when a value is entered
   void _printOutputValueTextFormField(String value) {
     setState(() {
       textFormFieldVar = double.parse(value);
+      convertedValue = textFormFieldVar * 4;
       print('the textFormFieldVar - $textFormFieldVar');
     });
   }
@@ -45,9 +48,11 @@ class _ConversionScreenState extends State<ConversionScreen> {
   void clearText() {
     myTextFieldController.clear();
     myTextFormFieldController.clear();
+    // setState resets the variables, when clearText is called
     setState(() {
       textFieldVar = 0;
       textFormFieldVar = 0.0;
+      convertedValue = 0;
     });
   }
 
@@ -67,7 +72,7 @@ class _ConversionScreenState extends State<ConversionScreen> {
                   TextField(
                     maxLength: 6,
                     onChanged: _printOutputValueTextField,
-                    // inputFormatter allows only numbers and .
+                    // inputFormatter - allows only numbers and .
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)'))
                     ],
@@ -112,6 +117,10 @@ class _ConversionScreenState extends State<ConversionScreen> {
                   Text(
                     ('output textFormField - $textFormFieldVar'),
                     style: const TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    ('converted output textFormField - $convertedValue'),
+                    style: const TextStyle(fontSize: 12),
                   ),
                 ],
               ),
